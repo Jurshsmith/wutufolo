@@ -6,10 +6,11 @@ import { usersContainer } from './templates/users-container.template';
 
 
 const indexPage = `
-    ${appTitle}
+    ${appTitle} <br />
 
     ${usersContainer}
-`
+`;
+
 if (window.location.pathname === '/') {
     mountApp('#app', indexPage);
 } else {
