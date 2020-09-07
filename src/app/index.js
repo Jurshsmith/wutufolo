@@ -4,7 +4,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './pages/index';
-import './Rx/actions';
+import './Rx/';
 
 window.getGitHubUsers = () => {
     const octokit = new Octokit();

@@ -4,7 +4,7 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { populateUsersTemplate } from '../utils';
 
 const randomOffset = Math.floor(Math.random() * 500);
-const data$ = fromFetch(`https://api.github.com/users?&since=${randomOffset}`).pipe(
+export const data$ = fromFetch(`https://api.github.com/users?&since=${randomOffset}`).pipe(
  switchMap(response => {
    if (response.ok) {
      // OK return data

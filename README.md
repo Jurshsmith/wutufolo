@@ -12,3 +12,7 @@ Dev Server should perfectly be working
 - Link for the user's github profile
 - spot for the user's image
 - No need for pagination
+
+
+TO RUN APP
+- npm run dev

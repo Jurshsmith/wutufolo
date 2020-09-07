@@ -21,7 +21,7 @@ export const newUserDetail = `
         <img src="" class="card-img-top user-img" alt="...">
         <div class="card-body">
             <h5 class="user-name"></h5>
-            <p class="card-text">Follow this nigga</p>
+            <p class="card-text">Follow</p>
             <a href="#" target="_blank" class="btn btn-primary user-link"></a>
         </div>
     </div>

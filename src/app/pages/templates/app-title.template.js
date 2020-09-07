@@ -1,5 +1,7 @@
 
 
 export const appTitle =   `
-    <h2 class="display-3 row justify-content-center"> Wutufolo [Github] </h2>
+    <div class="row justify-content-center" style="word-break : break-all">
+        <div class="display-4"> Wutufolo [Github] </div>
+    </div>
 `;

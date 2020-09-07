@@ -1,8 +1,59 @@
 
-import { fromEvent } from 'rxjs';
+import { fromEvent, interval } from 'rxjs';
+import { map, concatMap, switchMap, catchError, debounce } from 'rxjs/operators';
+import { fromFetch } from 'rxjs/fetch';
+import { populateUsersTemplate } from '../utils';
+
+
+const processData = [
+    switchMap(response => {
+        if (response.ok) {
+            // OK return data
+            return response.json();
+        } else {
+            // Server is returning a status requiring the client to try something else.
+            return of({ error: true, message: `Error ${response.status}` });
+        }
+    }),
+    catchError(err => {
+        // Network or other error, handle appropriately
+        console.error(err);
+        return of({ error: true, message: err.message })
+    })
+];
+
 
 const randomizeButton = document.querySelector('.randomize-btn');
 
-const randomizeStream = fromEvent(randomizeButton);
+const randomizeButtonStream = fromEvent(randomizeButton, 'click');
 
-`It's going to be a good fit because the required technology stack is in perfect sync with my career. I have experience solving really complex problems, software related, and non-software related. I am highly passionate about building the right product using test-driven development tools like Jest, Cypress, Sonarqube, Mocha and Chai etc. I am also`
+// important to define your stream in a variable, it cooks up the whole structure of how the observable would look like
+
+const randomizeButtonStream$ = randomizeButtonStream.pipe(
+    map(
+        () => Math.floor(Math.random() * 500)
+    )
+)
+
+
+const updatedStream$ = randomizeButtonStream$.pipe(
+    debounce(() => interval(500)),
+    concatMap( randomOffset => fromFetch(`https://api.github.com/users?&since=${randomOffset}`) ),
+    ...processData
+);
+
+updatedStream$.subscribe({
+    next: users => {
+       const users_ = new Set();
+       // user.login
+       while (users_.size <= 6){
+           users_.add(users[Math.floor(Math.random() * (users.length - 1))]);
+       }
+       const usersArray = [ ...users_ ];
+   
+       populateUsersTemplate(usersArray);
+    },
+    complete: () => console.log('done')
+});
+
+// you need to subscribe to an observable before it can listen to events
